@@ -1,0 +1,88 @@
+.gift-spinner-container {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  height: 500px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.wheel-container {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  margin: 0 auto;
+}
+
+.wheel {
+  width: 100%;
+  height: 100%;
+  transition: transform 3s cubic-bezier(0.17, 0.67, 0.15, 0.99);
+}
+
+.wheel.spinning {
+  transition: transform 3s cubic-bezier(0.17, 0.67, 0.15, 0.99);
+}
+
+.segment {
+  stroke: #222;
+  stroke-width: 1;
+  transition: filter 0.3s;
+}
+
+.segment.highlighted {
+  filter: brightness(1.2) drop-shadow(0 0 5px rgba(255, 255, 255, 0.8));
+}
+
+.indicator {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.arrow {
+  width: 0;
+  height: 0;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-top: 25px solid #2ecc71;
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.5));
+}
+
+.spin-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #ffca28;
+  color: #333;
+  font-weight: bold;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+  z-index: 5;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3), inset 0 0 15px rgba(255, 255, 255, 0.5);
+  transition: all 0.2s ease;
+}
+
+.spin-button:hover {
+  background-color: #ffd54f;
+  transform: translate(-50%, -50%) scale(1.05);
+}
+
+.spin-button:active {
+  transform: translate(-50%, -50%) scale(0.95);
+}
+
+.spin-button:disabled {
+  background-color: #e0e0e0;
+  cursor: not-allowed;
+} 
