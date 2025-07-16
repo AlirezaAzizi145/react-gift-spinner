@@ -26,8 +26,15 @@ const GiftSpinner = ({ onPrizeSelected }) => {
     // Generate a random rotation between 2 and 5 full rotations plus a random segment
     const segmentAngle = 45; // 360 / 8 = 45 degrees per segment
     const randomSegment = Math.floor(Math.random() * prizes.length);
-    const randomDegrees = randomSegment * segmentAngle;
-    const totalRotation = 720 + (Math.floor(Math.random() * 3) * 360) + randomDegrees;
+    
+    // Add a small random offset within the segment (0-80% of segment width) to avoid always landing on segment borders
+    const randomOffset = Math.random() * (segmentAngle * 0.8);
+    
+    const randomDegrees = (randomSegment * segmentAngle) + randomOffset;
+    // Ensure at least 2 full rotations (720 degrees) plus the random position
+    const minRotations = 720;
+    const extraRotations = Math.floor(Math.random() * 4) * 360; // 0-3 extra rotations
+    const totalRotation = minRotations + extraRotations + randomDegrees;
     
     setRotation(totalRotation);
     
@@ -124,6 +131,10 @@ const GiftSpinner = ({ onPrizeSelected }) => {
           style={{ transform: `rotate(${rotation}deg)` }}
         >
           {createSegments()}
+          
+          {/* Center circle */}
+          <circle cx="150" cy="150" r="40" fill="#ffca28" className="wheel-center" />
+          <text x="150" y="155" textAnchor="middle" fill="#333" fontWeight="bold" fontSize="14">spin</text>
         </svg>
         
         {/* Spin button in the center */}
