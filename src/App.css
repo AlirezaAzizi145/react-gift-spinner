@@ -67,6 +67,10 @@
 
 .app-spinner {
   flex-grow: 1;
-  position: relative;
-  margin-top: auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 50px;
+  width: 100%;
+  margin-top: 20px;
 }

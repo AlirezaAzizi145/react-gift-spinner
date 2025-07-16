@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './GiftSpinner.css';
 
 const prizes = [
@@ -137,14 +137,22 @@ const GiftSpinner = ({ onPrizeSelected }) => {
           <text x="150" y="155" textAnchor="middle" fill="#333" fontWeight="bold" fontSize="14">spin</text>
         </svg>
         
-        {/* Spin button in the center */}
-        <button 
-          className="spin-button"
+        {/* Make the wheel interactive */}
+        <div 
+          className="spin-button-overlay"
           onClick={spinWheel}
-          disabled={spinning}
-        >
-          spin
-        </button>
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: '80px',
+            height: '80px',
+            borderRadius: '50%',
+            cursor: spinning ? 'not-allowed' : 'pointer',
+            zIndex: 10
+          }}
+        />
       </div>
     </div>
   );
