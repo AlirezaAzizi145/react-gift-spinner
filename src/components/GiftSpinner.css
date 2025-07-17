@@ -42,6 +42,29 @@
   filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.3));
 }
 
+/* Stationary center button */
+.center-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #ffca28;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3), inset 0 0 15px rgba(255, 255, 255, 0.5);
+  z-index: 5;
+}
+
+.spin-text {
+  color: #333;
+  font-weight: bold;
+  font-size: 18px;
+}
+
 .indicator {
   position: absolute;
   top: -25px;
@@ -91,4 +114,53 @@
 .spin-button:disabled {
   background-color: #e0e0e0;
   cursor: not-allowed;
+}
+
+/* Segment icon style */
+.segment-icon {
+  width: 20px;
+  height: 20px;
+  fill: white;
+}
+
+/* Improved mobile responsiveness */
+@media screen and (max-width: 768px) {
+  .app-spinner {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .gift-spinner-container {
+    width: 100%;
+    height: auto;
+    padding: 0;
+  }
+  
+  .wheel-container {
+    width: 280px;
+    height: 280px;
+  }
+  
+  .wheel {
+    width: 280px;
+    height: 280px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .wheel-container {
+    width: 250px;
+    height: 250px;
+  }
+  
+  .wheel {
+    width: 250px;
+    height: 250px;
+  }
+  
+  .center-button {
+    width: 70px;
+    height: 70px;
+  }
 } 

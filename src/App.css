@@ -65,12 +65,57 @@
   color: #333;
 }
 
+.winning-message {
+  margin-top: 15px;
+  padding: 10px 15px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  animation: fadeIn 0.5s ease;
+}
+
+.winning-message p {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .app-spinner {
   flex-grow: 1;
+  position: relative;
+  margin-top: auto;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
-  padding-bottom: 50px;
-  width: 100%;
-  margin-top: 20px;
+}
+
+/* Mobile responsiveness */
+@media screen and (max-width: 480px) {
+  .app-content {
+    height: 100vh;
+    padding: 0;
+  }
+  
+  .app-header {
+    padding: 15px 10px;
+  }
+  
+  .app-buttons {
+    gap: 8px;
+  }
+  
+  .btn {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
 }
