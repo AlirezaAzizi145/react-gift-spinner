@@ -19,11 +19,8 @@
   position: relative;
   width: 300px;
   height: 300px;
-  transition: transform 3s cubic-bezier(0.17, 0.67, 0.15, 0.99);
-}
-
-.wheel.spinning {
-  transition: transform 3s cubic-bezier(0.17, 0.67, 0.15, 0.99);
+  /* Transition is managed in JS for better control */
+  will-change: transform; /* Optimize for animations */
 }
 
 .segment {
@@ -65,55 +62,28 @@
   font-size: 18px;
 }
 
+/* Position the indicator to be at the top edge of the wheel */
 .indicator {
   position: absolute;
-  top: -25px;
+  top: 0;
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
 }
 
+/* Simple arrow styling */
 .arrow {
   width: 0;
   height: 0;
   border-left: 15px solid transparent;
   border-right: 15px solid transparent;
   border-top: 25px solid #2ecc71;
-  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.4));
 }
 
-.spin-button {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background-color: #ffca28;
-  color: #333;
-  font-weight: bold;
-  font-size: 18px;
-  border: none;
-  cursor: pointer;
-  z-index: 5;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3), inset 0 0 15px rgba(255, 255, 255, 0.5);
-  transition: all 0.2s ease;
-  opacity: 0; /* Hide the button as we're using the SVG center */
-}
-
-.spin-button:hover {
-  background-color: #ffd54f;
-  transform: translate(-50%, -50%) scale(1.05);
-}
-
-.spin-button:active {
-  transform: translate(-50%, -50%) scale(0.95);
-}
-
-.spin-button:disabled {
-  background-color: #e0e0e0;
-  cursor: not-allowed;
+/* Remove the arrow:before element that added the gold circle */
+.arrow:before {
+  display: none;
 }
 
 /* Segment icon style */
@@ -124,17 +94,20 @@
 }
 
 /* Improved mobile responsiveness */
-@media screen and (max-width: 768px) {
-  .app-spinner {
-    display: flex;
-    justify-content: center;
-    width: 100%;
+@media screen and (min-width: 769px) {
+  .indicator {
+    top: 0;
   }
-  
+}
+
+@media screen and (max-width: 768px) {
   .gift-spinner-container {
     width: 100%;
     height: auto;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   
   .wheel-container {
@@ -145,6 +118,11 @@
   .wheel {
     width: 280px;
     height: 280px;
+  }
+  
+  /* This stays the same - mobile positioning is correct */
+  .indicator {
+    top: 0;
   }
 }
 
@@ -162,5 +140,9 @@
   .center-button {
     width: 70px;
     height: 70px;
+  }
+  
+  .indicator {
+    top: 0;
   }
 } 

@@ -1,70 +1,139 @@
-# Getting Started with Create React App
+# React Gift Spinner
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A customizable and interactive prize wheel/spinner component for React applications. Designed for giveaways, games, promotions, and interactive user experiences.
 
-## Available Scripts
+![React Gift Spinner](./spinner.png)
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+- Interactive spinning wheel with smooth animations
+- Fully customizable colors, labels, and icons
+- Probability-based prize selection
+- Responsive design for mobile and desktop
+- Support for custom prize data
+- TypeScript support with full type definitions
+- Callback functionality when prize is selected
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Installation
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```bash
+npm install react-gift-spinner
+# or
+yarn add react-gift-spinner
+```
 
-### `npm test`
+## Quick Start
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```jsx
+import React, { useState } from 'react';
+import { GiftSpinner } from 'react-gift-spinner';
+import 'react-gift-spinner/dist/esm/GiftSpinner.css'; // Import the styles
 
-### `npm run build`
+function App() {
+  const [prize, setPrize] = useState(null);
+  
+  const handlePrizeSelected = (selectedPrize) => {
+    setPrize(selectedPrize);
+    console.log('Selected prize:', selectedPrize);
+  };
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+  return (
+    <div className="app">
+      <h1>Spin to Win!</h1>
+      
+      <GiftSpinner onPrizeSelected={handlePrizeSelected} />
+      
+      {prize && (
+        <div className="winning-message">
+          <p>Congratulations! You won: {prize.icon} {prize.label}</p>
+        </div>
+      )}
+    </div>
+  );
+}
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+export default App;
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Custom Prizes
 
-### `npm run eject`
+You can provide your own custom prizes with different probabilities:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```jsx
+import React from 'react';
+import { GiftSpinner } from 'react-gift-spinner';
+import 'react-gift-spinner/dist/esm/GiftSpinner.css';
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+const customPrizes = [
+  { 
+    label: "1000 Points", 
+    color: "#ff4081",
+    icon: "🏆",
+    probability: 0.05  // 5% chance
+  },
+  { 
+    label: "Car", 
+    color: "#651fff",
+    icon: "🚗",
+    probability: 0.01  // 1% chance (rare)
+  },
+  { 
+    label: "500 Points", 
+    color: "#3d5afe",
+    icon: "💎",
+    probability: 0.15  // 15% chance
+  },
+  // Additional prizes...
+];
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+function App() {
+  return <GiftSpinner customPrizes={customPrizes} />;
+}
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## API Reference
 
-## Learn More
+### Props
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `customPrizes` | `PrizeItem[]` | `defaultPrizes` | Array of prize objects |
+| `onPrizeSelected` | `(prize: PrizeItem) => void` | `undefined` | Callback function when a prize is selected |
+| `className` | `string` | `''` | Additional CSS class for styling |
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### PrizeItem Interface
 
-### Code Splitting
+```typescript
+interface PrizeItem {
+  label: string;        // Text to display on the wheel
+  color: string;        // Background color (hex, rgb, etc.)
+  icon: string | React.ReactNode; // Emoji, URL to image, or React component
+  probability: number;  // Probability weight (0 to 1)
+}
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Browser Support
 
-### Analyzing the Bundle Size
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
+- Mobile browsers (iOS Safari, Chrome for Android)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Development
 
-### Making a Progressive Web App
+To run the project locally:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+1. Clone this repo
+2. Install dependencies: `npm install`
+3. Start the development server: `npm start`
 
-### Advanced Configuration
+## Building
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+```bash
+npm run build
+```
 
-### Deployment
+## License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+MIT © Alireza Azizi

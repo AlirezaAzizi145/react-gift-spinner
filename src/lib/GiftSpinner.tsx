@@ -1,8 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import './GiftSpinner.css';
 
+export interface PrizeItem {
+  label: string;
+  color: string;
+  icon: string | React.ReactNode;
+  probability: number;
+}
+
+export interface GiftSpinnerProps {
+  /**
+   * Callback function called when a prize is selected
+   */
+  onPrizeSelected?: (prize: PrizeItem) => void;
+  
+  /**
+   * Custom prizes to use instead of the default prizes
+   */
+  customPrizes?: PrizeItem[];
+  
+  /**
+   * Optional CSS class for additional styling
+   */
+  className?: string;
+}
+
 // Default prizes with icons/images and probabilities
-const prizes = [
+export const defaultPrizes: PrizeItem[] = [
   { 
     label: "1000 Points", 
     color: "#ff4081",
@@ -53,16 +77,24 @@ const prizes = [
   }
 ];
 
-const GiftSpinner = ({ onPrizeSelected, customPrizes }) => {
-  const [rotation, setRotation] = useState(0);
-  const [spinning, setSpinning] = useState(false);
-  const [selectedPrize, setSelectedPrize] = useState(null);
+/**
+ * A customizable spinning wheel component for prize giveaways
+ */
+export const GiftSpinner: React.FC<GiftSpinnerProps> = ({
+  onPrizeSelected,
+  customPrizes,
+  className = '',
+}) => {
+  const wheelRef = useRef<SVGSVGElement>(null);
+  const [key, setKey] = useState<number>(0); // Key for forcing re-render
+  const [spinning, setSpinning] = useState<boolean>(false);
+  const [selectedPrize, setSelectedPrize] = useState<PrizeItem | null>(null);
   
   // Use custom prizes if provided, otherwise use default prizes
-  const spinnerPrizes = customPrizes || prizes;
+  const spinnerPrizes = customPrizes || defaultPrizes;
   
   // Function to select a prize based on probability weights
-  const selectPrizeByProbability = () => {
+  const selectPrizeByProbability = (): { prize: PrizeItem; index: number } => {
     // Filter out prizes with 0 probability
     const availablePrizes = spinnerPrizes.filter(prize => 
       prize.probability !== undefined && prize.probability > 0
@@ -102,7 +134,7 @@ const GiftSpinner = ({ onPrizeSelected, customPrizes }) => {
     // Find the prize that matches the random number
     const selectedRange = probabilityRanges.find(
       range => random >= range.start && random < range.end
-    );
+    ) || probabilityRanges[0]; // Fallback to first prize if no match (shouldn't happen)
     
     // Find the original index in spinnerPrizes array
     const index = spinnerPrizes.findIndex(prize => prize.label === selectedRange.prize.label);
@@ -111,11 +143,14 @@ const GiftSpinner = ({ onPrizeSelected, customPrizes }) => {
     return { prize: selectedRange.prize, index };
   };
   
-  const spinWheel = () => {
+  const spinWheel = (): void => {
     if (spinning) return;
     
     setSpinning(true);
     setSelectedPrize(null);
+    
+    // Increment key to force re-render and reset animation state
+    setKey(prevKey => prevKey + 1);
     
     // Select a prize based on probability weights
     const { prize: selectedPrize, index: selectedIndex } = selectPrizeByProbability();
@@ -123,28 +158,37 @@ const GiftSpinner = ({ onPrizeSelected, customPrizes }) => {
     console.log("Selected index:", selectedIndex, "Prize:", selectedPrize.label);
     
     // Calculate degrees per segment
-    const segmentAngle = 360 / spinnerPrizes.length; // 45 degrees for 8 segments
+    const segmentAngle = 360 / spinnerPrizes.length; 
     
     // Add a small random offset within the segment (0-80% of segment width) 
     // to avoid always landing on exact center of segment
     const randomOffset = Math.random() * (segmentAngle * 0.8);
     
-    // CRITICAL FIX: Calculate the correct rotation to land on the selected prize
+    // Calculate the correct rotation to land on the selected prize
     // The wheel rotates clockwise, so we need to calculate the opposite position
-    // Each segment is 45 degrees (for 8 segments)
-    // To land on segment N, we need to rotate to 360 - (N * 45) degrees
-    // Then adjust for the random offset
     const landingPosition = 360 - ((selectedIndex * segmentAngle) + randomOffset);
     
-    // Ensure at least 3 full rotations (1080 degrees) plus the position for the selected prize
-    const minRotations = 1080; // At least 3 full rotations
-    const extraRotations = Math.floor(Math.random() * 3) * 360; // 0-2 extra rotations
-    
-    const totalRotation = minRotations + extraRotations + landingPosition;
+    // Ensure exactly 3 full rotations (1080 degrees) plus the position for the selected prize
+    const totalRotation = 1080 + landingPosition;
     
     console.log("Landing position:", landingPosition, "Total rotation:", totalRotation);
     
-    setRotation(totalRotation);
+    // Apply the rotation after a short delay to ensure rendering cycle is complete
+    if (wheelRef.current) {
+      // Force reflow before applying new rotation
+      wheelRef.current.style.transition = 'none';
+      wheelRef.current.style.transform = `rotate(0deg)`;
+      // Use type assertion to access offsetHeight
+      void (wheelRef.current as unknown as HTMLElement).offsetHeight; // Force reflow
+      
+      // Apply new rotation with transition
+      setTimeout(() => {
+        if (wheelRef.current) {
+          wheelRef.current.style.transition = 'transform 3s cubic-bezier(0.17, 0.67, 0.15, 0.99)';
+          wheelRef.current.style.transform = `rotate(${totalRotation}deg)`;
+        }
+      }, 10);
+    }
     
     // Set the selected prize after animation completes
     setTimeout(() => {
@@ -158,36 +202,48 @@ const GiftSpinner = ({ onPrizeSelected, customPrizes }) => {
   };
 
   // Helper function to render icon/image
-  const renderIcon = (prize, x, y) => {
-    // Check if the icon is an image URL (string starting with http or data:)
-    if (typeof prize.icon === 'string' && (prize.icon.startsWith('http') || prize.icon.startsWith('data:'))) {
+  const renderIcon = (prize: PrizeItem, x: number, y: number): React.ReactNode => {
+    // Check if the icon is a string (emoji or image URL)
+    if (typeof prize.icon === 'string') {
+      // Check if the icon is an image URL
+      if (prize.icon.startsWith('http') || prize.icon.startsWith('data:')) {
+        return (
+          <image 
+            href={prize.icon} 
+            x={x - 10} 
+            y={y - 15} 
+            width="20" 
+            height="20"
+          />
+        );
+      }
+      // Otherwise, render as text (emoji or text icon)
       return (
-        <image 
-          href={prize.icon} 
-          x={x - 10} 
-          y={y - 15} 
-          width="20" 
-          height="20"
-        />
+        <text 
+          x={x} 
+          y={y - 12} 
+          fill="white" 
+          fontSize="16" 
+          textAnchor="middle"
+        >
+          {prize.icon}
+        </text>
       );
     }
-    // Otherwise, render as text (emoji or text icon)
+    
+    // If it's a React node, render it within a foreignObject (for custom React components)
     return (
-      <text 
-        x={x} 
-        y={y - 12} 
-        fill="white" 
-        fontSize="16" 
-        textAnchor="middle"
-      >
-        {prize.icon}
-      </text>
+      <foreignObject x={x - 15} y={y - 15} width="30" height="30">
+        <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          {prize.icon}
+        </div>
+      </foreignObject>
     );
   };
 
   // Create segments using SVG paths
-  const createSegments = () => {
-    const segments = [];
+  const createSegments = (): React.ReactNode[] => {
+    const segments: React.ReactNode[] = [];
     const radius = 150;
     const centerX = 150;
     const centerY = 150;
@@ -264,24 +320,23 @@ const GiftSpinner = ({ onPrizeSelected, customPrizes }) => {
   };
 
   return (
-    <div className="gift-spinner-container">
-      {/* Green triangle pointer */}
-      <div className="indicator">
-        <div className="arrow"></div>
-      </div>
-      
-      {/* Spinner wheel */}
+    <div className={`gift-spinner-container ${className}`.trim()}>
+      {/* Wheel container with the indicator arrow inside it */}
       <div className="wheel-container">
+        {/* Green triangle pointer */}
+        <div className="indicator">
+          <div className="arrow"></div>
+        </div>
+        
         <svg 
-          className={`wheel ${spinning ? 'spinning' : ''}`}
+          key={key} // Use key to force re-render
+          ref={wheelRef}
+          className="wheel"
           width="300" 
           height="300" 
           viewBox="0 0 300 300"
-          style={{ transform: `rotate(${rotation}deg)` }}
         >
           {createSegments()}
-          
-          {/* Remove center circle from rotating part */}
         </svg>
         
         {/* Add a stationary center button */}

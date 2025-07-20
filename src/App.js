@@ -1,50 +1,50 @@
 import './App.css';
-import GiftSpinner from './components/GiftSpinner';
+import GiftSpinner from './lib/GiftSpinner';
 import { useState } from 'react';
 
-// Example of custom prizes with images and probabilities
+// Example of custom prizes with icons/images and probabilities
 const customPrizes = [
   { 
     label: "1000 Points", 
     color: "#ff4081",
     icon: "🏆",
-    probability: 0  // 5% chance
+    probability: 0.05  // 5% chance
   },
   { 
     label: "LEXUS LS-2019", 
     color: "#651fff",
     icon: "🚗",
-    probability: 0  // 1% chance (rare)
+    probability: 0.01  // 1% chance (rare)
   },
   { 
     label: "500 Points", 
     color: "#3d5afe",
     icon: "💎",
-    probability: 0  // 15% chance
+    probability: 0.15  // 15% chance
   },
   { 
     label: "Golden Race", 
     color: "#2979ff",
     icon: "🏁",
-    probability: 0.5  // 10% chance
+    probability: 0.1  // 10% chance
   },
   { 
     label: "250 Points", 
     color: "#00b0ff",
     icon: "🎖️",
-    probability:0.5  // 30% chance (common)
+    probability: 0.3  // 30% chance (common)
   },
   { 
     label: "Best Player", 
     color: "#311b92",
     icon: "👑",
-    probability: 0  // 4% chance
+    probability: 0.04  // 4% chance
   },
   { 
     label: "Great Prize", 
     color: "#4527a0",
     icon: "🎁",
-    probability: 0  // 15% chance
+    probability: 0.15  // 15% chance
   },
   { 
     label: "NULL Prize", 
@@ -68,15 +68,7 @@ function App() {
         <div className="app-header">
           <div className="gift-icon">🎁</div>
           <h1>Spin to Win</h1>
-          <div className="app-buttons">
-            <button className="btn btn-primary">
-              <span className="icon">▶</span> Show Ads
-            </button>
-            <button className="btn btn-secondary">
-              <span className="coin-icon">🪙</span> 10 Coins
-            </button>
-          </div>
-          
+        
           {winningPrize && (
             <div className="winning-message">
               <p>Congratulations! You won: {winningPrize.icon} {winningPrize.label}</p>

@@ -15,6 +15,7 @@
   display: flex;
   flex-direction: column;
   position: relative;
+  align-items: center;
 }
 
 .app-header {
@@ -97,6 +98,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
 }
 
 /* Mobile responsiveness */
@@ -104,6 +106,8 @@
   .app-content {
     height: 100vh;
     padding: 0;
+    align-items: center;
+    justify-content: space-between;
   }
   
   .app-header {
@@ -117,5 +121,11 @@
   .btn {
     padding: 6px 12px;
     font-size: 14px;
+  }
+
+  .app-spinner {
+    width: 100%;
+    display: flex;
+    justify-content: center;
   }
 }
