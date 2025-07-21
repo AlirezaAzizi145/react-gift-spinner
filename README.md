@@ -13,6 +13,7 @@ A customizable and interactive prize wheel/spinner component for React applicati
 - Support for custom prize data
 - TypeScript support with full type definitions
 - Callback functionality when prize is selected
+- Unique prefixed class names to avoid conflicts
 
 ## Installation
 
@@ -111,6 +112,17 @@ interface PrizeItem {
   probability: number;  // Probability weight (0 to 1)
 }
 ```
+
+## CSS Classes
+
+All CSS classes in this component are prefixed with `rgp-` to avoid conflicts with your existing styles. Key classes include:
+
+- `rgp-gift-spinner-container` - Main container
+- `rgp-wheel-container` - Wheel wrapper 
+- `rgp-wheel` - The spinning wheel itself
+- `rgp-segment` - Individual wheel segments
+- `rgp-center-button` - Center spin button
+- `rgp-indicator` - Arrow indicator 
 
 ## Browser Support
 

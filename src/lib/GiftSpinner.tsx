@@ -289,7 +289,7 @@ export const GiftSpinner: React.FC<GiftSpinnerProps> = ({
           <path
             d={path}
             fill={prize.color}
-            className={selectedPrize && selectedPrize.label === prize.label ? 'segment highlighted' : 'segment'}
+            className={selectedPrize && selectedPrize.label === prize.label ? 'rgp-segment rgp-highlighted' : 'rgp-segment'}
             style={{
               opacity: prize.probability === 0 ? 0.3 : 1 // Dim segments with zero probability
             }}
@@ -320,18 +320,18 @@ export const GiftSpinner: React.FC<GiftSpinnerProps> = ({
   };
 
   return (
-    <div className={`gift-spinner-container ${className}`.trim()}>
+    <div className={`rgp-gift-spinner-container ${className}`.trim()}>
       {/* Wheel container with the indicator arrow inside it */}
-      <div className="wheel-container">
+      <div className="rgp-wheel-container">
         {/* Green triangle pointer */}
-        <div className="indicator">
-          <div className="arrow"></div>
+        <div className="rgp-indicator">
+          <div className="rgp-arrow"></div>
         </div>
         
         <svg 
           key={key} // Use key to force re-render
           ref={wheelRef}
-          className="wheel"
+          className="rgp-wheel"
           width="300" 
           height="300" 
           viewBox="0 0 300 300"
@@ -340,13 +340,13 @@ export const GiftSpinner: React.FC<GiftSpinnerProps> = ({
         </svg>
         
         {/* Add a stationary center button */}
-        <div className="center-button">
-          <div className="spin-text">spin</div>
+        <div className="rgp-center-button">
+          <div className="rgp-spin-text">spin</div>
         </div>
         
         {/* Make the wheel interactive */}
         <div 
-          className="spin-button-overlay"
+          className="rgp-spin-button-overlay"
           onClick={spinWheel}
           style={{
             position: 'absolute',

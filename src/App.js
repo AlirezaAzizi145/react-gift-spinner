@@ -1,6 +1,6 @@
-import { GiftSpinner } from "react-gift-spinner";
+import './App.css';
+import { GiftSpinner } from './lib';
 import { useState } from 'react';
-import 'react-gift-spinner/dist/esm/GiftSpinner.css';
 
 // Example of custom prizes with icons/images and probabilities
 const customPrizes = [
