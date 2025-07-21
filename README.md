@@ -27,7 +27,7 @@ yarn add react-gift-spinner
 ```jsx
 import React, { useState } from 'react';
 import { GiftSpinner } from 'react-gift-spinner';
-import 'react-gift-spinner/dist/esm/GiftSpinner.css'; // Import the styles
+import 'react-gift-spinner/dist/esm/lib/GiftSpinner.css'; // Import the styles
 
 function App() {
   const [prize, setPrize] = useState(null);
@@ -62,7 +62,7 @@ You can provide your own custom prizes with different probabilities:
 ```jsx
 import React from 'react';
 import { GiftSpinner } from 'react-gift-spinner';
-import 'react-gift-spinner/dist/esm/GiftSpinner.css';
+import 'react-gift-spinner/dist/esm/lib/GiftSpinner.css';
 
 const customPrizes = [
   { 

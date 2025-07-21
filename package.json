@@ -1,6 +1,6 @@
 {
   "name": "react-gift-spinner",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A customizable and interactive prize wheel/spinner component for React",
   "author": "Alireza Azizi",
   "license": "MIT",
@@ -14,9 +14,9 @@
     "component",
     "svg"
   ],
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
-  "types": "dist/types/index.d.ts",
+  "main": "dist/cjs/lib/index.js",
+  "module": "dist/esm/lib/index.js",
+  "types": "dist/types/lib/index.d.ts",
   "files": [
     "dist",
     "README.md",
@@ -25,16 +25,17 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/alirezaazizi145/react-gift-spinner.git"
+    "url": "git+https://github.com/AlirezaAzizi145/react-gift-spinner.git"
   },
   "bugs": {
-    "url": "https://github.com/alirezaazizi145/react-gift-spinner/issues"
+    "url": "https://github.com/AlirezaAzizi145/react-gift-spinner/issues"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "rimraf dist && npm run build:esm && npm run build:cjs",
+    "build": "rimraf dist && npm run build:esm && npm run build:cjs && npm run copy-css",
     "build:esm": "tsc --outDir dist/esm --module esnext",
     "build:cjs": "tsc --outDir dist/cjs --module commonjs",
+    "copy-css": "copyfiles -u 1 \"src/lib/**/*.css\" dist/esm && copyfiles -u 1 \"src/lib/**/*.css\" dist/cjs",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint --ext .tsx --ext .ts ./src",
@@ -52,6 +53,7 @@
     "@testing-library/user-event": "^13.5.0",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
+    "copyfiles": "^2.4.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-scripts": "5.0.1",
