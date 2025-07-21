@@ -14,6 +14,7 @@ A customizable and interactive prize wheel/spinner component for React applicati
 - TypeScript support with full type definitions
 - Callback functionality when prize is selected
 - Unique prefixed class names to avoid conflicts
+- CSS automatically included (no separate import needed)
 
 ## Installation
 
@@ -28,7 +29,7 @@ yarn add react-gift-spinner
 ```jsx
 import React, { useState } from 'react';
 import { GiftSpinner } from 'react-gift-spinner';
-import 'react-gift-spinner/dist/esm/lib/GiftSpinner.css'; // Import the styles
+// CSS is automatically imported
 
 function App() {
   const [prize, setPrize] = useState(null);
@@ -63,7 +64,6 @@ You can provide your own custom prizes with different probabilities:
 ```jsx
 import React from 'react';
 import { GiftSpinner } from 'react-gift-spinner';
-import 'react-gift-spinner/dist/esm/lib/GiftSpinner.css';
 
 const customPrizes = [
   { 

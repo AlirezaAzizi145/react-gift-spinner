@@ -1,6 +1,7 @@
 import './App.css';
-import { GiftSpinner } from './lib';
+import { GiftSpinner } from 'react-gift-spinner';
 import { useState } from 'react';
+// With prefixed class names, we don't need to import the CSS separately - it's included in the component
 
 // Example of custom prizes with icons/images and probabilities
 const customPrizes = [
