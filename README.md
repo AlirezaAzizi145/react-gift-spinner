@@ -73,7 +73,7 @@ const customPrizes = [
     probability: 0.05  // 5% chance
   },
   { 
-    label: "Car", 
+    label: "LEXUS LS-2019", 
     color: "#651fff",
     icon: "🚗",
     probability: 0.01  // 1% chance (rare)
@@ -84,7 +84,36 @@ const customPrizes = [
     icon: "💎",
     probability: 0.15  // 15% chance
   },
-  // Additional prizes...
+  { 
+    label: "Golden Race", 
+    color: "#2979ff",
+    icon: "🏁",
+    probability: 0.1  // 10% chance
+  },
+  { 
+    label: "250 Points", 
+    color: "#00b0ff",
+    icon: "🎖️",
+    probability: 0.3  // 30% chance (common)
+  },
+  { 
+    label: "Best Player", 
+    color: "#311b92",
+    icon: "👑",
+    probability: 0.04  // 4% chance
+  },
+  { 
+    label: "Great Prize", 
+    color: "#4527a0",
+    icon: "🎁",
+    probability: 0.15  // 15% chance
+  },
+  { 
+    label: "NULL Prize", 
+    color: "#512da8",
+    icon: "❌",
+    probability: 0  // 0% chance - will never be selected
+  }
 ];
 
 function App() {
@@ -149,3 +178,7 @@ npm run build
 ## License
 
 MIT © Alireza Azizi
+
+## Live Demo
+
+Try it out instantly on CodeSandbox: [Live Demo](https://codesandbox.io/p/sandbox/fdcz4c)
