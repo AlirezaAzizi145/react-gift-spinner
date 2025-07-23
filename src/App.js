@@ -1,5 +1,6 @@
 import './App.css';
-import { GiftSpinner } from 'react-gift-spinner';
+// Import from local files instead of the installed package
+import { GiftSpinner } from './lib/index';
 import { useState } from 'react';
 // With prefixed class names, we don't need to import the CSS separately - it's included in the component
 
