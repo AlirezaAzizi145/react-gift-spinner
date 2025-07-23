@@ -65,48 +65,50 @@ You can provide your own custom prizes with different probabilities:
 import React from 'react';
 import { GiftSpinner } from 'react-gift-spinner';
 
+// The 'probability' value is the exact percentage chance for each prize.
+// For example, probability: 10 means 10% chance, probability: 0.5 means 0.5% chance.
 const customPrizes = [
   { 
     label: "1000 Points", 
     color: "#ff4081",
     icon: "🏆",
-    probability: 0.05  // 5% chance
+    probability: 10  // 10% chance
   },
   { 
     label: "LEXUS LS-2019", 
     color: "#651fff",
     icon: "🚗",
-    probability: 0.01  // 1% chance (rare)
+    probability: 0.5  // 0.5% chance (rare)
   },
   { 
     label: "500 Points", 
     color: "#3d5afe",
     icon: "💎",
-    probability: 0.15  // 15% chance
+    probability: 15  // 15% chance
   },
   { 
     label: "Golden Race", 
     color: "#2979ff",
     icon: "🏁",
-    probability: 0.1  // 10% chance
+    probability: 10  // 10% chance
   },
   { 
     label: "250 Points", 
     color: "#00b0ff",
     icon: "🎖️",
-    probability: 0.3  // 30% chance (common)
+    probability: 30  // 30% chance (common)
   },
   { 
     label: "Best Player", 
     color: "#311b92",
     icon: "👑",
-    probability: 0.04  // 4% chance
+    probability: 4  // 4% chance
   },
   { 
     label: "Great Prize", 
     color: "#4527a0",
     icon: "🎁",
-    probability: 0.15  // 15% chance
+    probability: 15  // 15% chance
   },
   { 
     label: "NULL Prize", 
@@ -138,7 +140,7 @@ interface PrizeItem {
   label: string;        // Text to display on the wheel
   color: string;        // Background color (hex, rgb, etc.)
   icon: string | React.ReactNode; // Emoji, URL to image, or React component
-  probability: number;  // Probability weight (0 to 1)
+  probability: number;  // Percentage chance for this prize (e.g. 10 means 10%, 0.5 means 0.5%)
 }
 ```
 
