@@ -15,12 +15,50 @@
   margin: 0 auto;
 }
 
+/* Animated glowing background circle */
+.rgp-wheel-background {
+  position: absolute;
+  width: 340px;
+  height: 340px;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  /* Create a gradient border effect */
+  padding: 2px; /* Border width - thinner for more subtle effect */
+  background: linear-gradient(90deg, #3D7CCF, #7171C9, #D4254B, #3D7CCF);
+  animation: rotate 8s linear infinite; /* Slower rotation for subtlety */
+}
+
+.rgp-wheel-background::before {
+  content: '';
+  position: absolute;
+  top: 2px; /* Same as padding */
+  left: 2px; /* Same as padding */
+  right: 2px; /* Same as padding */
+  bottom: 2px; /* Same as padding */
+  border-radius: 50%;
+  background: #000;
+  z-index: 1;
+}
+
+@keyframes rotate {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
 .rgp-wheel {
   position: relative;
   width: 300px;
   height: 300px;
-  /* Transition is managed in JS for better control */
   will-change: transform; /* Optimize for animations */
+  z-index: 2;
 }
 
 .rgp-segment {
@@ -115,6 +153,11 @@
     height: 280px;
   }
   
+  .rgp-wheel-background {
+    width: 320px;
+    height: 320px;
+  }
+  
   .rgp-wheel {
     width: 280px;
     height: 280px;
@@ -130,6 +173,11 @@
   .rgp-wheel-container {
     width: 250px;
     height: 250px;
+  }
+  
+  .rgp-wheel-background {
+    width: 290px;
+    height: 290px;
   }
   
   .rgp-wheel {

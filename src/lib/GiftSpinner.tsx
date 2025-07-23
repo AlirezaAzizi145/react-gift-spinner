@@ -328,6 +328,9 @@ export const GiftSpinner: React.FC<GiftSpinnerProps> = ({
     <div className={`rgp-gift-spinner-container ${className}`.trim()}>
       {/* Wheel container with the indicator arrow inside it */}
       <div className="rgp-wheel-container">
+        {/* Animated glowing background circle */}
+        <div className="rgp-wheel-background"></div>
+        
         {/* Green triangle pointer */}
         <div className="rgp-indicator">
           <div className="rgp-arrow"></div>
