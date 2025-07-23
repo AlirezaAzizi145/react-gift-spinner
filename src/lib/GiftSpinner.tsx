@@ -5,6 +5,9 @@ export interface PrizeItem {
   label: string;
   color: string;
   icon: string | React.ReactNode;
+  /**
+   * Percentage chance for this prize (e.g. 10 means 10%, 0.5 means 0.5%)
+   */
   probability: number;
 }
 
@@ -31,7 +34,7 @@ export const defaultPrizes: PrizeItem[] = [
     label: "1000 Points", 
     color: "#ff4081",
     icon: "🏆",
-    probability: 0.05  // 5% chance
+    probability: 5  // 5% chance
   },
   { 
     label: "LEXUS LS-2019", 
@@ -73,7 +76,7 @@ export const defaultPrizes: PrizeItem[] = [
     label: "NULL Prize", 
     color: "#512da8",
     icon: "❌",
-    probability: 1  // 100% chance
+    probability: 100  // 100% chance
   }
 ];
 
@@ -111,14 +114,16 @@ export const GiftSpinner: React.FC<GiftSpinnerProps> = ({
     }
     
     // Normalize probabilities to ensure they sum to 1
+    // Convert percentage values to decimal (divide by 100)
     const totalProbability = availablePrizes.reduce(
-      (sum, prize) => sum + (prize.probability || 0), 0
+      (sum, prize) => sum + ((prize.probability || 0) / 100), 0
     );
     
     // Create probability ranges for selection
     let cumulativeProbability = 0;
     const probabilityRanges = availablePrizes.map(prize => {
-      const normalizedProbability = (prize.probability || 0) / totalProbability;
+      // Convert percentage to decimal
+      const normalizedProbability = ((prize.probability || 0) / 100) / totalProbability;
       const range = {
         prize,
         start: cumulativeProbability,
