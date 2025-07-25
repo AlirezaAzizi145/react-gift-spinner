@@ -2,7 +2,7 @@
 
 A customizable and interactive prize wheel/spinner component for React applications. Designed for giveaways, games, promotions, and interactive user experiences.
 
-![React Gift Spinner](./spinner.png)
+![React Gift Spinner](./spinnerWheel.png)
 
 ## Features
 
