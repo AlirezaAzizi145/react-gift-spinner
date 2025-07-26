@@ -208,9 +208,8 @@ export const GiftSpinner: React.FC<GiftSpinnerProps> = ({
 
   // Helper function to render icon/image
   const renderIcon = (prize: PrizeItem, x: number, y: number): React.ReactNode => {
-    // Calculate icon size based on number of prizes
-    const totalPrizes = spinnerPrizes.length;
-    const iconSize = Math.max(12, Math.min(20, 160 / totalPrizes));
+    // Fixed icon size to match original UI
+    const iconSize = 16;
     const halfIconSize = iconSize / 2;
     
     // Check if the icon is a string (emoji or image URL)
@@ -285,15 +284,14 @@ export const GiftSpinner: React.FC<GiftSpinnerProps> = ({
       const textAngle = (startAngle + endAngle) / 2 - 90; // Average angle, adjusted to start from top
       const textRad = textAngle * Math.PI / 180;
       
-      // Adjust text position based on segment size
-      // For smaller segments, move text closer to edge
-      const textRadiusAdjustment = Math.min(1, Math.max(0.5, totalPrizes / 16)); // Adjustment factor
-      const textRadius = radius * (0.65 * textRadiusAdjustment); // Position text at adjusted % of radius
+      // Fixed position ratios to match the original UI
+      // Text positioned at 75% of radius from center
+      const textRadius = radius * 0.75; 
       const textX = centerX + textRadius * Math.cos(textRad);
       const textY = centerY + textRadius * Math.sin(textRad);
       
-      // Position icon closer to center
-      const iconRadius = radius * (0.4 * textRadiusAdjustment); // Position icon at adjusted % of radius
+      // Icons positioned at 55% of radius from center
+      const iconRadius = radius * 0.55;
       const iconX = centerX + iconRadius * Math.cos(textRad);
       const iconY = centerY + iconRadius * Math.sin(textRad);
       
@@ -301,9 +299,8 @@ export const GiftSpinner: React.FC<GiftSpinnerProps> = ({
       const textRotation = textAngle + 90; // Adjust text rotation so it's radial
       const iconRotation = textRotation; // Same rotation for icon
       
-      // Calculate font size based on number of prizes
-      // Smaller font for more prizes
-      const fontSize = Math.max(6, Math.min(12, 120 / totalPrizes));
+      // Fixed font size to match original UI
+      const fontSize = 10;
       
       segments.push(
         <g key={index}>
@@ -373,15 +370,7 @@ export const GiftSpinner: React.FC<GiftSpinnerProps> = ({
           className="rgp-spin-button-overlay"
           onClick={spinWheel}
           style={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            width: '80px',
-            height: '80px',
-            borderRadius: '50%',
-            cursor: spinning ? 'not-allowed' : 'pointer',
-            zIndex: 10
+            cursor: spinning ? 'not-allowed' : 'pointer'
           }}
         />
       </div>
