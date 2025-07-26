@@ -9,6 +9,7 @@ A customizable and interactive prize wheel/spinner component for React applicati
 - Interactive spinning wheel with smooth animations
 - Fully customizable colors, labels, and icons
 - Probability-based prize selection
+- **Flexible prize count** - supports any number of prizes
 - Responsive design for mobile and desktop
 - Support for custom prize data
 - TypeScript support with full type definitions
@@ -121,6 +122,30 @@ const customPrizes = [
 function App() {
   return <GiftSpinner customPrizes={customPrizes} />;
 }
+```
+
+## Flexible Prize Count
+
+The spinner automatically adapts to any number of prizes. You can provide as few as 2 or as many as needed:
+
+```jsx
+// Example with 6 prizes
+const sixPrizes = [
+  { label: "Prize 1", color: "#ff4081", icon: "🏆", probability: 20 },
+  { label: "Prize 2", color: "#651fff", icon: "🚗", probability: 15 },
+  { label: "Prize 3", color: "#3d5afe", icon: "💎", probability: 25 },
+  { label: "Prize 4", color: "#2979ff", icon: "🏁", probability: 10 },
+  { label: "Prize 5", color: "#00b0ff", icon: "🎖️", probability: 20 },
+  { label: "Prize 6", color: "#311b92", icon: "👑", probability: 10 }
+];
+
+// Example with many prizes
+const manyPrizes = [
+  // ... 10 or more prizes ...
+];
+
+// The spinner will automatically adjust segment sizes, text positioning, 
+// and font sizes to accommodate the number of prizes
 ```
 
 ## API Reference

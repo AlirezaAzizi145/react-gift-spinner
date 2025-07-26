@@ -101,6 +101,35 @@
   width: 100%;
 }
 
+.prize-count-selector {
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.prize-count-selector button {
+  padding: 8px 16px;
+  background-color: #333;
+  color: white;
+  border: 2px solid #444;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.prize-count-selector button:hover {
+  background-color: #444;
+  transform: translateY(-2px);
+}
+
+.prize-count-selector button.active {
+  background-color: #651fff;
+  border-color: #7c4dff;
+  box-shadow: 0 0 10px rgba(124, 77, 255, 0.5);
+}
+
 /* Mobile responsiveness */
 @media screen and (max-width: 480px) {
   .app-content {

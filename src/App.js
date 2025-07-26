@@ -4,7 +4,7 @@ import { GiftSpinner } from './lib/index';
 import { useState } from 'react';
 // With prefixed class names, we don't need to import the CSS separately - it's included in the component
 
-// Example of custom prizes with icons/images and probabilities
+// Single array of prizes that we can modify for testing by adding/removing items
 const customPrizes = [
   { 
     label: "1000 Points", 
@@ -36,24 +36,8 @@ const customPrizes = [
     icon: "🎖️",
     probability: 30  // 30% chance (common)
   },
-  { 
-    label: "Best Player", 
-    color: "#311b92",
-    icon: "👑",
-    probability: 4  // 4% chance
-  },
-  { 
-    label: "Great Prize", 
-    color: "#4527a0",
-    icon: "🎁",
-    probability: 15  // 15% chance
-  },
-  { 
-    label: "NULL Prize", 
-    color: "#512da8",
-    icon: "❌",
-    probability: 0  // 0% chance - will never be selected
-  }
+ 
+  
 ];
 
 function App() {

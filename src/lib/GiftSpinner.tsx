@@ -208,6 +208,10 @@ export const GiftSpinner: React.FC<GiftSpinnerProps> = ({
 
   // Helper function to render icon/image
   const renderIcon = (prize: PrizeItem, x: number, y: number): React.ReactNode => {
+    // Fixed icon size to match original UI
+    const iconSize = 16;
+    const halfIconSize = iconSize / 2;
+    
     // Check if the icon is a string (emoji or image URL)
     if (typeof prize.icon === 'string') {
       // Check if the icon is an image URL
@@ -215,10 +219,10 @@ export const GiftSpinner: React.FC<GiftSpinnerProps> = ({
         return (
           <image 
             href={prize.icon} 
-            x={x - 10} 
-            y={y - 15} 
-            width="20" 
-            height="20"
+            x={x - halfIconSize} 
+            y={y - halfIconSize} 
+            width={iconSize} 
+            height={iconSize}
           />
         );
       }
@@ -226,9 +230,9 @@ export const GiftSpinner: React.FC<GiftSpinnerProps> = ({
       return (
         <text 
           x={x} 
-          y={y - 12} 
+          y={y - halfIconSize + 4} 
           fill="white" 
-          fontSize="16" 
+          fontSize={iconSize} 
           textAnchor="middle"
         >
           {prize.icon}
@@ -238,7 +242,7 @@ export const GiftSpinner: React.FC<GiftSpinnerProps> = ({
     
     // If it's a React node, render it within a foreignObject (for custom React components)
     return (
-      <foreignObject x={x - 15} y={y - 15} width="30" height="30">
+      <foreignObject x={x - halfIconSize} y={y - halfIconSize} width={iconSize} height={iconSize}>
         <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
           {prize.icon}
         </div>
@@ -253,9 +257,13 @@ export const GiftSpinner: React.FC<GiftSpinnerProps> = ({
     const centerX = 150;
     const centerY = 150;
     
+    // Calculate angle per segment based on number of prizes
+    const totalPrizes = spinnerPrizes.length;
+    const anglePerSegment = 360 / totalPrizes;
+    
     spinnerPrizes.forEach((prize, index) => {
-      const startAngle = index * 45; // 45 degrees per segment
-      const endAngle = (index + 1) * 45;
+      const startAngle = index * anglePerSegment; // Dynamic angle per segment
+      const endAngle = (index + 1) * anglePerSegment;
       
       // Convert angles to radians for SVG path calculation
       const startRad = (startAngle - 90) * Math.PI / 180; // -90 to start at top
@@ -268,26 +276,31 @@ export const GiftSpinner: React.FC<GiftSpinnerProps> = ({
       const y2 = centerY + radius * Math.sin(endRad);
       
       // Create path for the segment
-      const largeArcFlag = 0; // 0 for arcs less than 180 degrees
+      // Use largeArcFlag 1 if angle > 180 degrees
+      const largeArcFlag = anglePerSegment > 180 ? 1 : 0;
       const path = `M ${centerX} ${centerY} L ${x1} ${y1} A ${radius} ${radius} 0 ${largeArcFlag} 1 ${x2} ${y2} Z`;
       
       // Calculate position for the text and icon
       const textAngle = (startAngle + endAngle) / 2 - 90; // Average angle, adjusted to start from top
       const textRad = textAngle * Math.PI / 180;
       
-      // Position text farther out from center
-      const textRadius = radius * 0.65; // Position text at 65% of radius
+      // Fixed position ratios to match the original UI
+      // Text positioned at 75% of radius from center
+      const textRadius = radius * 0.75; 
       const textX = centerX + textRadius * Math.cos(textRad);
       const textY = centerY + textRadius * Math.sin(textRad);
       
-      // Position icon closer to center
-      const iconRadius = radius * 0.4; // Position icon at 40% of radius
+      // Icons positioned at 55% of radius from center
+      const iconRadius = radius * 0.55;
       const iconX = centerX + iconRadius * Math.cos(textRad);
       const iconY = centerY + iconRadius * Math.sin(textRad);
       
       // Create text rotation
       const textRotation = textAngle + 90; // Adjust text rotation so it's radial
       const iconRotation = textRotation; // Same rotation for icon
+      
+      // Fixed font size to match original UI
+      const fontSize = 10;
       
       segments.push(
         <g key={index}>
@@ -305,7 +318,7 @@ export const GiftSpinner: React.FC<GiftSpinnerProps> = ({
             x={textX}
             y={textY}
             fill="white"
-            fontSize="10"
+            fontSize={fontSize}
             fontWeight="bold"
             textAnchor="middle"
             transform={`rotate(${textRotation}, ${textX}, ${textY})`}
@@ -357,15 +370,7 @@ export const GiftSpinner: React.FC<GiftSpinnerProps> = ({
           className="rgp-spin-button-overlay"
           onClick={spinWheel}
           style={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            width: '80px',
-            height: '80px',
-            borderRadius: '50%',
-            cursor: spinning ? 'not-allowed' : 'pointer',
-            zIndex: 10
+            cursor: spinning ? 'not-allowed' : 'pointer'
           }}
         />
       </div>
@@ -373,4 +378,4 @@ export const GiftSpinner: React.FC<GiftSpinnerProps> = ({
   );
 };
 
-export default GiftSpinner; 
+export default GiftSpinner;
